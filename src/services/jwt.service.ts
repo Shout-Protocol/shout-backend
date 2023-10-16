@@ -11,7 +11,7 @@ export const generateAccessToken = (payload: Record<string, any>) => {
 export const verifyAccessToken = (token: string) => {
   try {
     const decoded = jwt.verify(token, secretKey);
-    return decoded;
+    return { status: true, decoded };
   } catch (err) {
     throw new Error(err?.toString());
   }
