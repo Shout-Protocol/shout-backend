@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import { ApolloServer } from "apollo-server-express";
 
 import "dotenv/config";
+import db from "./configs/db.config";
 
 import typeDefs from "./models/typeDefs";
 import resolvers from "./resolvers/resolvers";
@@ -13,6 +14,7 @@ const server = new ApolloServer({ typeDefs, resolvers });
 
 const startServer = async () => {
   await server.start();
+  await db.connect();
 
   const app = express();
 
