@@ -23,9 +23,11 @@ const typeDefs = gql`
   type Comment {
     _id: ID!
     message: String!
-    post: Post!
-    owner: Profile!
+    postId: ID!
+    ownerId: ID!
+    likeId: [ID]
     like: [Profile]
+    owner: Profile
   }
 
   type Query {
@@ -38,19 +40,42 @@ const typeDefs = gql`
   type Mutation {
     # Pass
     createProfile(profile: CreateProfileInput!): Profile
-    updateProfile(id: ID!, profile: UpdateProfile!): Profile
+    updateProfile(id: ID!, profile: UpdateProfileInput!): Profile
     createPost(ipfsHash: String!, ownerId: ID!): Post
+    createComment(comment: CreateCommentInput!): Comment
+    updateComment(id: ID!, comment: UpdateCommentInput!): Comment
+    likePost(postId: ID!, ownerId: ID!): Post
+    unLikePost(postId: ID!, ownerId: ID!): Post
+    likeComment(commentId: ID!, ownerId: ID!): Comment
+    unLikeComment(commentId: ID!, ownerId: ID!): Comment
     # ---
-    # updatePost, deletePost(Hide),
+    # updatePost(id: ID!, post: UpdatePostInput!): Post
+    # deletePost(id: ID!): Post
     # createComment, updateComment, deleteComment(Hide),
-    # likePost, likeComment, unlikePost, unlikeComment,
+    deleteComment(id: ID!): Comment
   }
 
   input CreateProfileInput {
-    walletAddress: String!, name: String, avatar: String, bio: String
+    walletAddress: String!
+    name: String
+    avatar: String
+    bio: String
   }
-  input UpdateProfile {
-    name: String, avatar: String, bio: String
+  input UpdateProfileInput {
+    name: String
+    avatar: String
+    bio: String
+  }
+  input UpdatePostInput {
+    ipfsHash: String!
+  }
+  input CreateCommentInput {
+    message: String!
+    postId: ID!
+    ownerId: ID!
+  }
+  input UpdateCommentInput {
+    message: String!
   }
 `;
 

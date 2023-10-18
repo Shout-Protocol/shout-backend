@@ -39,6 +39,64 @@ const resolvers: Resolvers = {
       const { _id } = await Post.create(args);
       return await Post.findOne({ _id });
     },
+    // ----
+    // updatePost: async (_, args) => {
+    //   const post = await Post.findByIdAndUpdate(args.id, args.post, {
+    //     new: true,
+    //   });
+    //   return await Post.findOne({ _id: post?._id });
+    // },
+    // deletePost: async (_, args) => {
+    //   const post = await Post.findByIdAndDelete(args.id);
+    //   return await Post.findOne({ _id: post?._id });
+    // }
+    createComment: async (_, args) => {
+      const { _id } = await Comment.create(args.comment);
+      return await Comment.findById({ _id });
+    },
+    updateComment: async (_, args) => {
+      const comment = await Comment.findByIdAndUpdate(args.id, args.comment, {
+        new: true,
+      });
+      return await Comment.findOne({ _id: comment?._id });
+    },
+    deleteComment: async (_, args) => {
+      const comment = await Comment.findByIdAndDelete(args.id);
+      return await Comment.findOne({ _id: comment?._id });
+    },
+    // FIXME: Duplicate likeId
+    likePost: async (_, args) => {
+      const post = await Post.findByIdAndUpdate(
+        args.postId,
+        { $push: { likeId: args.ownerId } },
+        { new: true }
+      );
+      return await Post.findById(post?._id);
+    },
+    unLikePost: async (_, args) => {
+      const post = await Post.findByIdAndUpdate(
+        args.postId,
+        { $pull: { likeId: args.ownerId } },
+        { new: true }
+      );
+      return await Post.findById(post?._id);
+    },
+    likeComment: async (_, args) => {
+      const comment = await Comment.findByIdAndUpdate(
+        args.commentId,
+        { $push: { likeId: args.ownerId } },
+        { new: true }
+      );
+      return await Comment.findById(comment?._id);
+    },
+    unLikeComment: async (_, args) => {
+      const comment = await Comment.findByIdAndUpdate(
+        args.commentId,
+        { $pull: { likeId: args.ownerId } },
+        { new: true }
+      );
+      return await Comment.findById(comment?._id);
+    }
   },
 };
 
