@@ -5,7 +5,7 @@
   "main": "src/server.ts",
   "scripts": {
     "build": "npm run codegen && npx tsc",
-    "start": "node dist/index.js",
+    "start": "node dist/src/server.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/src/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "codegen": "graphql-codegen --config codegen.ts"
