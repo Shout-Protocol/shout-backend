@@ -36,7 +36,7 @@ const resolvers: Resolvers = {
       return await Profile.findOne({ _id: profile?._id });
     },
     createPost: async (_, args) => {
-      const { _id } = await Post.create(args);
+      const { _id } = await Post.create(args.post);
       return await Post.findOne({ _id });
     },
     // ----

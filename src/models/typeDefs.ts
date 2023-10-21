@@ -13,6 +13,7 @@ const typeDefs = gql`
   type Post {
     _id: ID!
     ipfsHash: String!
+    chainId: String!
     owner: Profile
     ownerId: ID!
     likeId: [ID]
@@ -41,7 +42,7 @@ const typeDefs = gql`
     # Pass
     createProfile(profile: CreateProfileInput!): Profile
     updateProfile(id: ID!, profile: UpdateProfileInput!): Profile
-    createPost(ipfsHash: String!, ownerId: ID!): Post
+    createPost(post: CreatePostInput): Post
     createComment(comment: CreateCommentInput!): Comment
     updateComment(id: ID!, comment: UpdateCommentInput!): Comment
     likePost(postId: ID!, ownerId: ID!): Post
@@ -53,6 +54,12 @@ const typeDefs = gql`
     # deletePost(id: ID!): Post
     # createComment, updateComment, deleteComment(Hide),
     deleteComment(id: ID!): Comment
+  }
+
+  input CreatePostInput {
+    ipfsHash: String!
+    chainId: String!
+    ownerId: ID!
   }
 
   input CreateProfileInput {
