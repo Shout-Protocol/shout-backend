@@ -7,3 +7,10 @@ services:
     ports:
       - 4000:4000
     restart: unless-stopped
+  # reservse-proxy:
+  #   image: ngnix:alpine
+  #   container_name: nginx_reverse_proxy
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  #   ports:
+  #     - 4000:4000
