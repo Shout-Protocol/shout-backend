@@ -37,6 +37,7 @@ const typeDefs = gql`
     profile(walletAddress: String!): Profile
     posts: [Post]
     postByOwnerId(ownerId: ID!): [Post]
+    postByPostId(postId: [ID!]): [Post]
   }
 
   type Mutation {
