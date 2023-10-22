@@ -17,7 +17,16 @@ const resolvers: Resolvers = {
   },
   Post: {
     owner: async (parent) => await Profile.findOne({ _id: parent.ownerId }),
-    comment: async (parent) => await Comment.find({ postId: parent._id }),
+    comment: async (parent) => {
+      return await Comment.find({ postId: parent._id });
+    },
+    like: async (parent) =>
+      await Profile.find({
+        _id: { $in: parent.likeId },
+      }),
+  },
+  Comment: {
+    owner: async (parent) => await Profile.findOne({ _id: parent.ownerId }),
     like: async (parent) =>
       await Profile.find({
         _id: { $in: parent.likeId },
@@ -96,7 +105,7 @@ const resolvers: Resolvers = {
         { new: true }
       );
       return await Comment.findById(comment?._id);
-    }
+    },
   },
 };
 
