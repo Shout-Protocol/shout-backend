@@ -11,6 +11,7 @@ const resolvers: Resolvers = {
     profile: async (_, args) =>
       await Profile.findOne({ walletAddress: args.walletAddress }),
     posts: async () => await Post.find({}),
+    postByOwnerId: async (_, args) => await Post.find({ ownerId: args.ownerId }),
   },
   Profile: {
     post: async (parent) => await Post.find({ ownerId: parent._id }),
